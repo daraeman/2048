@@ -37,6 +37,7 @@ GameManager.prototype.isGameTerminated = function () {
 
 // Set up the game
 GameManager.prototype.setup = function () {
+  var self = this;
   var previousState = this.storageManager.getGameState();
 
   // Reload the game from a previous game if present
