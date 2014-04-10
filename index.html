@@ -19,7 +19,7 @@
 <body>
   <div class="container">
     <div class="heading">
-      <h1 class="title">2048</h1>
+      <h1 class="title"><span class="base_convert">2048</span></h1>
       <div class="scores-container">
         <div class="score-container">0</div>
         <div class="best-container">0</div>
@@ -27,8 +27,48 @@
     </div>
 
     <div class="above-game">
-      <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+     <p class="game-intro">Join the numbers and get to the <strong><span class="base_convert">2048</span> tile!</strong></p>
       <a class="restart-button">New Game</a>
+      <div class="base-container">
+        <label for="base">Current Base:</label>
+        <select id="base" name="base">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="35">35</option>
+          <option value="36">36</option>
+        </select>
+      </div>
     </div>
 
     <div class="game-container">
@@ -81,10 +121,15 @@
     </p>
     <hr>
     <p>
-    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a> Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
+    Base logic by <a href="http://daraeman.com" target="_blank">David Rae.</a><br>
+    Created by <a href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a><br>
+    Based on <a href="https://itunes.apple.com/us/app/1024!/id823499224" target="_blank">1024 by Veewo Studio</a> and conceptually similar to <a href="http://asherv.com/threes/" target="_blank">Threes by Asher Vollmer.</a>
     </p>
   </div>
+  
+  <div id="hidden-resizer" style="visibility: hidden"></div>
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script src="js/bind_polyfill.js"></script>
   <script src="js/classlist_polyfill.js"></script>
   <script src="js/animframe_polyfill.js"></script>

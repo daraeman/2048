@@ -58,6 +58,14 @@ GameManager.prototype.setup = function () {
     this.addStartTiles();
   }
 
+  // change the base values
+  $('select[name="base"]').val( self.actuator.getCurrentBase() );
+
+  $('select[name="base"]').change(function(){
+    self.actuator.setCurrentBase( $(this).val() );
+    self.actuate();
+  });
+
   // Update the actuator
   this.actuate();
 };

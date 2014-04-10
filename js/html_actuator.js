@@ -3,6 +3,11 @@ function HTMLActuator() {
   this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
+  this.currentBase      = Math.floor(Math.random() * (36 - 2 + 1)) + 2;
+
+  this.getCurrentBase = function() { return this.currentBase };
+  this.setCurrentBase = function( value ) { this.currentBase = value };
+
 
   this.score = 0;
 }
@@ -20,6 +25,8 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
         }
       });
     });
+
+    self.resizeTextToFitContainer();
 
     self.updateScore(metadata.score);
     self.updateBestScore(metadata.bestScore);
@@ -62,7 +69,7 @@ HTMLActuator.prototype.addTile = function (tile) {
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  inner.textContent = tile.value;
+  inner.textContent = self.changeNumberToCurrentBase( tile.value );
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
@@ -114,14 +121,14 @@ HTMLActuator.prototype.updateScore = function (score) {
   if (difference > 0) {
     var addition = document.createElement("div");
     addition.classList.add("score-addition");
-    addition.textContent = "+" + difference;
+    addition.textContent = "+" + this.changeNumberToCurrentBase( difference );
 
     this.scoreContainer.appendChild(addition);
   }
 };
 
 HTMLActuator.prototype.updateBestScore = function (bestScore) {
-  this.bestContainer.textContent = bestScore;
+  this.bestContainer.textContent = this.changeNumberToCurrentBase( bestScore );
 };
 
 HTMLActuator.prototype.message = function (won) {
@@ -137,3 +144,56 @@ HTMLActuator.prototype.clearMessage = function () {
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
 };
+
+
+
+
+
+/****** added methods ******/
+
+// resize text to fit
+// * this uses a hidden div to iterate throught font-sizes until we get an acceptable width
+HTMLActuator.prototype.resizeTextToFitContainer = function () {
+
+  var desired_width = 100;
+
+  $( '.game-container .tile-container .tile .tile-inner' ).each(function(){
+
+    var text = $(this).text();
+    if ( text.length > 0 ) {
+      var size,
+        resizer = $( "#hidden-resizer" );
+        resizer
+          .css({
+            'width': 'auto',
+            'height': 'auto',
+            'padding': '0px',
+            'margin': '0px',
+            'display': 'inline',
+            'font-family': $(this).css('font-family'),
+            'font-weight': $(this).css('font-weight'),
+            'line-height': $(this).css('line-height'),
+            'font-style': $(this).css('font-style'),
+            'font-size': $(this).css('font-size')
+          })
+          .text( text );
+
+      while ( resizer.width() > desired_width ) {
+        size = parseInt( resizer.css( "font-size" ), 10 );
+        if ( size < 1 ) {
+          resizer.css( "font-size", 1 );
+          break;
+        }
+        resizer.css( "font-size", (size - 1) );
+      }
+
+      $(this).css( "font-size", size ).text( resizer.html() );
+    }
+  });
+
+}
+
+// change a base-10 number to the current base
+HTMLActuator.prototype.changeNumberToCurrentBase = function ( num ) {
+  return parseInt(num).toString( this.getCurrentBase() );
+}
